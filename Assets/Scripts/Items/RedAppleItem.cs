@@ -20,20 +20,20 @@ public class RedAppleItem : MonoBehaviour
 	void Start()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
-		itemValue = Constants.RED_APPLE_ITEM_VALUE;
-		fallingSpeed = Constants.RED_APPLE_ITEM_FALLING_SPEED;
+		itemValue = Constants.instance.RED_APPLE_ITEM_VALUE;
+		fallingSpeed = Constants.instance.RED_APPLE_ITEM_FALLING_SPEED;
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		rigidbody.velocity = new Vector2(Constants.ZERO, -fallingSpeed);
+		rigidbody.velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
 	}
 
 	void OnTriggerEnter2D(Collider2D coll)
 	{
 		//checks if item is colliding with player, if true destroy object and add item value to score
-		if (coll.gameObject.tag == Constants.PLAYER)
+		if (coll.gameObject.tag == Constants.instance.PLAYER)
 		{
 			Destroy(gameObject);
 
@@ -42,7 +42,7 @@ public class RedAppleItem : MonoBehaviour
 		}
 
 		// checks if item is colliding with floor, if true destroy item
-		if (coll.gameObject.tag == Constants.FLOOR)
+		if (coll.gameObject.tag == Constants.instance.FLOOR)
 		{
 			Destroy(gameObject);
 		}
