@@ -6,7 +6,7 @@ public static class TimeUtil
 {
 	public static int GetMiliseconds(int seconds)
 	{
-		var miliseconds = seconds * Constants.MILISECOND_MULTIPLIER;
+		var miliseconds = seconds * Constants.instance.MILISECOND_MULTIPLIER;
 
 		return miliseconds;
 	}

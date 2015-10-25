@@ -1,14 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
-
+	#region Fields
 	static GameManager _instance;
-
-	private int score = 0;
 	public Text text;
+
+	private int _score;
+	private bool _paused;
+	public int _numberOfItemsToFall;
+
+	public string levelNameToLoadNext;
+
+	#endregion
+
+	#region Singleton
 
 	static public bool isActive
 	{
@@ -38,14 +48,74 @@ public class GameManager : MonoBehaviour
 		}
 	}
 
+	#endregion
+
+	#region Properties
+
 	public int Score
 	{
-		get { return score; }
-		set { score = value; }
+		get { return _score; }
+		set { _score = value; }
+	}
+
+	public int NumberOfItemsToFall
+	{
+		get
+		{
+			return _numberOfItemsToFall;
+		}
+		set { _numberOfItemsToFall = value; }
+	}
+
+	public bool Paused
+	{
+		get { return _paused; }
+		set { _paused = value; }
+	}
+
+	#endregion
+
+	#region Unity methods
+
+	void Start()
+	{
+		Paused = false;
+		Score = 0;
 	}
 
 	void Update()
 	{
+
+		if (NumberOfItemsToFall == 0)
+		{
+			try
+			{
+				Application.LoadLevel(levelNameToLoadNext);
+			}
+			catch (Exception e)
+			{
+				Application.Quit();			
+			}
+			
+		}
+
 		text.text = "Ana's score: " + Score;
+
+		if (Input.GetKeyUp(KeyCode.Space))
+		{
+			if (Paused == false)
+			{
+				Paused = true;
+				Time.timeScale = 0;
+			}
+			else
+			{
+				Paused = false;
+				Time.timeScale = 1;
+			}
+			
+		}
 	}
+
+	#endregion
 }

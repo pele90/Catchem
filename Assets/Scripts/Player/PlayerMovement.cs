@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 	void FixedUpdate()
 	{
 		_moveX = Input.GetAxis("Horizontal");
-		rigidbody2D.velocity = new Vector2(_moveX * movementSpeed, Constants.ZERO);
+		rigidbody2D.velocity = new Vector2(_moveX * movementSpeed, Constants.instance.ZERO);
 	}
 
 
