@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
 			
 		}
 
-		text.text = "Ana's score: " + Score;
+		text.text = "Score: " + Score;
 
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
