@@ -11,6 +11,7 @@ public class ItemManager : MonoBehaviour
 	public GameObject skullItem;
 	public GameObject witchHatItem;
 	public GameObject redAppleItem;
+
 	#endregion
 
 	// Use this for initialization
@@ -36,6 +37,8 @@ public class ItemManager : MonoBehaviour
 					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
 					, Quaternion.identity
 		);
+
+        GameManager.instance.NumberOfItemsToFall--;
 	}
 
 	void SpawnSkull()
@@ -44,7 +47,9 @@ public class ItemManager : MonoBehaviour
 					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
 					, Quaternion.identity
 		);
-	}
+
+        GameManager.instance.NumberOfItemsToFall--;
+    }
 
 	void SpawnWitchHat()
 	{
@@ -52,7 +57,9 @@ public class ItemManager : MonoBehaviour
 					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
 					, Quaternion.identity
 		);
-	}
+
+        GameManager.instance.NumberOfItemsToFall--;
+    }
 
 	void SpawnRedApple()
 	{
@@ -60,7 +67,9 @@ public class ItemManager : MonoBehaviour
 					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
 					, Quaternion.identity
 		);
-	}
+
+        GameManager.instance.NumberOfItemsToFall--;
+    }
 
 	#endregion
 

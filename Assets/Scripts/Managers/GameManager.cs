@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
@@ -8,9 +7,10 @@ public class GameManager : MonoBehaviour
 {
 	#region Fields
 	static GameManager _instance;
-	public Text text;
+	public Text scoreText;
+    public Text pauseText;
 
-	private int _score;
+    private int _score;
 	private bool _paused;
 	public int _numberOfItemsToFall;
 
@@ -85,8 +85,8 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
-
-		if (NumberOfItemsToFall == 0)
+        
+		if (NumberOfItemsToFall <= 0)
 		{
 			try
 			{
@@ -94,12 +94,13 @@ public class GameManager : MonoBehaviour
 			}
 			catch (Exception e)
 			{
+                Debug.Log(e);
 				Application.Quit();			
 			}
 			
 		}
 
-		text.text = "Score: " + Score;
+		scoreText.text = "Score: " + Score;
 
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
@@ -107,12 +108,14 @@ public class GameManager : MonoBehaviour
 			{
 				Paused = true;
 				Time.timeScale = 0;
+                pauseText.text = "Paused";
 			}
 			else
 			{
 				Paused = false;
 				Time.timeScale = 1;
-			}
+                pauseText.text = "";
+            }
 			
 		}
 	}
