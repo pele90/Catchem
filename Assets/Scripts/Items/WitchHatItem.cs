@@ -12,6 +12,8 @@ public class WitchHatItem : MonoBehaviour
 
 	public float fallingSpeed;
 
+    public AudioClip clip;
+
 	#endregion
 
 	#region Unity Methods
@@ -19,7 +21,7 @@ public class WitchHatItem : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody = GetComponent<Rigidbody2D>();
 		itemValue = Constants.instance.WITCH_HAT_ITEM_VALUE;
 		fallingSpeed = Constants.instance.WITCH_HAT_ITEM_FALLING_SPEED;
 	}
@@ -35,10 +37,13 @@ public class WitchHatItem : MonoBehaviour
 		//checks if item is colliding with player, if true destroy object and add item value to score
 		if (coll.gameObject.tag == Constants.instance.PLAYER)
 		{
-			Destroy(gameObject);
+
+            AudioSource.PlayClipAtPoint(clip, new Vector2(0,0));
+
+            Destroy(gameObject);
 
 			//add item value to player score
-			GameManager.instance.Score += itemValue;
+			GameManager.Score += itemValue;
 		}
 
 		// checks if item is colliding with floor, if true destroy item

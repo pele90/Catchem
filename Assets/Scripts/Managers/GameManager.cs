@@ -10,11 +10,12 @@ public class GameManager : MonoBehaviour
 	public Text scoreText;
     public Text pauseText;
 
-    private int _score;
+    private static int _score;
 	private bool _paused;
-	public int _numberOfItemsToFall;
+    private bool _slowed;
+    private int _numberOfItemsToFall = 10;
 
-	public string levelNameToLoadNext;
+    public string levelNameToLoadNext;
 
 	#endregion
 
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
 
 	#region Properties
 
-	public int Score
+	public static int Score
 	{
 		get { return _score; }
 		set { _score = value; }
@@ -73,34 +74,44 @@ public class GameManager : MonoBehaviour
 		set { _paused = value; }
 	}
 
-	#endregion
+    public bool Slowed
+    {
+        get { return _slowed; }
+        set { _slowed = value; }
+    }
 
-	#region Unity methods
+    #endregion
 
-	void Start()
+    #region Unity methods
+
+    void Start()
 	{
 		Paused = false;
-		Score = 0;
 	}
 
 	void Update()
 	{
-        
-		if (NumberOfItemsToFall <= 0)
-		{
-			try
-			{
-				Application.LoadLevel(levelNameToLoadNext);
-			}
-			catch (Exception e)
-			{
-                Debug.Log(e);
-				Application.Quit();			
-			}
-			
-		}
+        // check if all item are created
+        if (NumberOfItemsToFall <= 0)
+        {
+            // if so stop instanting items
+            // and wait until all item gameobjects are destroyed in the scene
+            if (GameObject.FindGameObjectsWithTag("FallingItem").Length == 0)
+            {
+                try
+                {
+                    // after that load next level
+                    Application.LoadLevel(levelNameToLoadNext);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                    Application.Quit();
+                }
+            }
+        }
 
-		scoreText.text = "Score: " + Score;
+        scoreText.text = "Score: " + Score;
 
 		if (Input.GetKeyUp(KeyCode.Space))
 		{
@@ -118,6 +129,20 @@ public class GameManager : MonoBehaviour
             }
 			
 		}
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
+            if (Slowed)
+            {
+                Time.timeScale = 0.5f;
+                Slowed = false;
+            }
+            else
+            {
+                Time.timeScale = 1;
+                Slowed = true;
+            }
+            
+        }
 	}
 
 	#endregion

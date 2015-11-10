@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class StartButtonHandler : MonoBehaviour {
+public class ButtonHandler : MonoBehaviour {
 
 	public void LoadBegginingLevel () {
-        Application.LoadLevel("basicSetup");
+        Application.LoadLevel("startLevel");
 	}
 
     public void LoadAboutScreen()

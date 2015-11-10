@@ -1,76 +1,100 @@
 ﻿using System.Timers;
 using UnityEngine;
 
+
 public class ItemManager : MonoBehaviour
 {
 
-	#region Fields
+    #region Fields
 
-	//references to falling item
-	public GameObject pumpkinItem;
-	public GameObject skullItem;
-	public GameObject witchHatItem;
-	public GameObject redAppleItem;
+    public GameObject[] itemPool;
 
-	#endregion
+    // basic unit of time
+    public float tickRate = 0.1f;
 
-	// Use this for initialization
-	void Start()
-	{
-		InvokeRepeating("SpawnPumpkin", 1, 2);
-		InvokeRepeating("SpawnSkull", 3, 3);
-		InvokeRepeating("SpawnWitchHat", 5, 5);
-		InvokeRepeating("SpawnRedApple", 10, 10);
-	}
+    // counter for how many ticks won't initialise item
+    private int delayCounter = -1;
 
-	// Update is called once per frame
-	void Update()
-	{
-	
-	}
+    // counter for measuring elapsed time in ticks
+    private int progressionCounter = 0;
 
-	#region Methods
-	
-	void SpawnPumpkin()
-	{
-		Instantiate(pumpkinItem , new Vector3(Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT)
-					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
-					, Quaternion.identity
-		);
+    #endregion
 
-        GameManager.instance.NumberOfItemsToFall--;
-	}
-
-	void SpawnSkull()
-	{
-		Instantiate(skullItem, new Vector3(Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT)
-					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
-					, Quaternion.identity
-		);
-
-        GameManager.instance.NumberOfItemsToFall--;
+    // Use this for initialization
+    void Start()
+    {
+        Random.seed = (int)System.DateTime.Now.Ticks;
+        InvokeRepeating("GogoMethod", 0, tickRate);
     }
 
-	void SpawnWitchHat()
-	{
-		Instantiate(witchHatItem, new Vector3(Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT)
-					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
-					, Quaternion.identity
-		);
-
-        GameManager.instance.NumberOfItemsToFall--;
+    // Update is called once per frame
+    void Update()
+    {
+        //if (GameManager.instance.NumberOfItemsToFall <= 0)
+        //{
+        //    CancelInvoke();
+        //}
     }
 
-	void SpawnRedApple()
-	{
-		Instantiate(redAppleItem, new Vector3(Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT)
-					, Constants.instance.HEIGHT_ITEM_STARTING_POINT)
-					, Quaternion.identity
-		);
+    #region Methods
 
-        GameManager.instance.NumberOfItemsToFall--;
+    // updating method that is called each tick
+    private void GogoMethod()
+    {
+        if (delayCounter == -1)
+        {
+            // on first call of the method set delay counter to random value
+            delayCounter = Random.Range(1, 10);
+        }
+
+
+        if (delayCounter == 0)
+        {
+            // getting random number so we can choose random item in item pool
+            var randomItem = Random.Range(0, 4);
+            // calculating item spawn position
+            var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
+
+            InstantiateRandomItemAtRandomLocaton(randomItem, randomPosition);
+
+            // calculate random number of ticks when not to instantiate item
+            if (progressionCounter < 50)
+            {
+                delayCounter = Random.Range(10, 20);
+            }
+            else if(progressionCounter > 50 && progressionCounter < 150)
+            {
+                delayCounter = Random.Range(1, 20);
+            }
+            else if(progressionCounter > 150 && progressionCounter < 300)
+            {
+                delayCounter = Random.Range(1, 10);
+            }
+            else
+            {
+                delayCounter = Random.Range(1, 5);
+            }
+        }
+        else
+        {
+            delayCounter--;
+        }
+
+        progressionCounter++;
     }
 
-	#endregion
+    private void InstantiateRandomItemAtRandomLocaton(int randomNumber, float randomSpawnPosition)
+    {
+        // choosing item from item pool
+        var randomItem = itemPool[randomNumber];
+        Instantiate(randomItem, new Vector2(randomSpawnPosition
+                                            , Constants.instance.HEIGHT_ITEM_STARTING_POINT)
+                                            , Quaternion.identity);
+    }
+
+    #endregion
+
+
+
 
 }
