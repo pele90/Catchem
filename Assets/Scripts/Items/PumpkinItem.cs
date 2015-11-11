@@ -12,13 +12,15 @@ public class PumpkinItem : MonoBehaviour
 
 	public float fallingSpeed;
 
-	#endregion
+    public AudioClip clip;
 
-	#region Unity Methods
+    #endregion
 
-	// Use this for initialization
-	void Start () {
-		rigidbody = GetComponent<Rigidbody2D>();
+    #region Unity Methods
+
+    // Use this for initialization
+    void Start () {
+        rigidbody = GetComponent<Rigidbody2D>();
 		itemValue = Constants.instance.PUMPKIN_ITEM_VALUE;
 		fallingSpeed = Constants.instance.PUMPKIN_ITEM_FALLING_SPEED;
 	}
@@ -34,10 +36,12 @@ public class PumpkinItem : MonoBehaviour
 		//checks if item is colliding with player, if true destroy object and add item value to score
 		if (coll.gameObject.tag == Constants.instance.PLAYER)
 		{
-			Destroy(gameObject);
+            AudioSource.PlayClipAtPoint(clip, transform.position);
+
+            Destroy(gameObject);
 
 			//add item value to player score
-			GameManager.instance.Score += itemValue;
+			GameManager.Score += itemValue;
 		}
 
 		// checks if item is colliding with floor, if true destroy item

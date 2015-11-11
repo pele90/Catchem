@@ -58,6 +58,8 @@ public class Constants : MonoBehaviour
 	public int RED_APPLE_ITEM_FALLING_FREQUENCY = 10;
 	public int WITCH_HAT_ITEM_FALLING_FREQUENCY = 15;
 
+    public int NUMBER_OF_AVAILABLE_ITEMS = 4;
+
 	#endregion
 
 
