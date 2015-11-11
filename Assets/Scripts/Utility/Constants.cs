@@ -42,14 +42,14 @@ public class Constants : MonoBehaviour
 	// Item values
 	public int PUMPKIN_ITEM_VALUE = 10;
 	public int SKULL_ITEM_VALUE = 20;
-	public int WITCH_HAT_ITEM_VALUE = 30;
+	public int HEALTH_POTION_ITEM_VALUE = 30;
 	public int RED_APPLE_ITEM_VALUE = 40;
 	//public static int LIFE_HEART_ITEM_VALUE = 1;
 
 	// Item falling speed
 	public float PUMPKIN_ITEM_FALLING_SPEED = 1.5f;
 	public float SKULL_ITEM_FALLING_SPEED = 2;
-	public float WITCH_HAT_ITEM_FALLING_SPEED = 2.2f;
+	public float HEALTH_POTION_ITEM_FALLING_SPEED = 2.2f;
 	public float RED_APPLE_ITEM_FALLING_SPEED = 2.5f;
 
 	// Item falling frequency
@@ -59,6 +59,21 @@ public class Constants : MonoBehaviour
 	public int WITCH_HAT_ITEM_FALLING_FREQUENCY = 15;
 
     public int NUMBER_OF_AVAILABLE_ITEMS = 4;
+
+	public int TOTAL_NUMBER_OF_ITEMS = 4;
+
+	// proggression counters
+	public int FIRST_THRESHOLD = 100;
+	public int SECOND_THRESHOLD = 300;
+	public int THIRD_THRESHOLD = 600;
+
+	// wait time for item to spawn
+	public int MIN_WAIT_TIME = 1;
+	public int MAX_WAIT_TIME = 30;
+	public int EASY_MIN_WAIT_TIME = 20;
+	public int HARD_MIN_WAIT_TIME = 10;
+	public int EASY_MAX_WAIT_TIME = 30;
+	public int HARD_MAX_WAIT_TIME = 20;
 
 	#endregion
 

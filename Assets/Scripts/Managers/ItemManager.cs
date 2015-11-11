@@ -44,35 +44,35 @@ public class ItemManager : MonoBehaviour
         if (delayCounter == -1)
         {
             // on first call of the method set delay counter to random value
-            delayCounter = Random.Range(1, 10);
+            delayCounter = Random.Range(Constants.instance.MIN_WAIT_TIME, Constants.instance.HARD_MIN_WAIT_TIME);
         }
 
 
         if (delayCounter == 0)
         {
             // getting random number so we can choose random item in item pool
-            var randomItem = Random.Range(0, 4);
+			var randomItem = Random.Range(Constants.instance.ZERO, Constants.instance.TOTAL_NUMBER_OF_ITEMS);
             // calculating item spawn position
             var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
 
             InstantiateRandomItemAtRandomLocaton(randomItem, randomPosition);
 
             // calculate random number of ticks when not to instantiate item
-            if (progressionCounter < 50)
+            if (progressionCounter < Constants.instance.FIRST_THRESHOLD)
             {
-                delayCounter = Random.Range(10, 20);
+                delayCounter = Random.Range(Constants.instance.EASY_MIN_WAIT_TIME, Constants.instance.EASY_MAX_WAIT_TIME);
             }
-            else if(progressionCounter > 50 && progressionCounter < 150)
+			else if (progressionCounter > Constants.instance.FIRST_THRESHOLD && progressionCounter < Constants.instance.SECOND_THRESHOLD)
             {
-                delayCounter = Random.Range(1, 20);
+                delayCounter = Random.Range(Constants.instance.MIN_WAIT_TIME, Constants.instance.EASY_MAX_WAIT_TIME);
             }
-            else if(progressionCounter > 150 && progressionCounter < 300)
+            else if(progressionCounter > Constants.instance.SECOND_THRESHOLD && progressionCounter < Constants.instance.THIRD_THRESHOLD)
             {
-                delayCounter = Random.Range(1, 10);
+                delayCounter = Random.Range(Constants.instance.MIN_WAIT_TIME, Constants.instance.HARD_MAX_WAIT_TIME);
             }
             else
             {
-                delayCounter = Random.Range(1, 5);
+                delayCounter = Random.Range(Constants.instance.MIN_WAIT_TIME, 5);
             }
         }
         else

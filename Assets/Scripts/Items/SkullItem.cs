@@ -12,7 +12,7 @@ public class SkullItem : MonoBehaviour
 
 	public float fallingSpeed;
 
-    public AudioClip clip;
+	private GameManager gameManager;
 
     #endregion
 
@@ -20,7 +20,8 @@ public class SkullItem : MonoBehaviour
 
     // Use this for initialization
     void Start()
-	{
+    {
+	    gameManager = GameManager.instance;
 		rigidbody = GetComponent<Rigidbody2D>();
 		itemValue = Constants.instance.SKULL_ITEM_VALUE;
 		fallingSpeed = Constants.instance.SKULL_ITEM_FALLING_SPEED;
@@ -32,17 +33,16 @@ public class SkullItem : MonoBehaviour
 		rigidbody.velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
 	}
 
-	void OnTriggerEnter2D(Collider2D coll)
+	void OnCollisionEnter2D(Collision2D coll)
 	{
 		//checks if item is colliding with player, if true destroy object and add item value to score
 		if (coll.gameObject.tag == Constants.instance.PLAYER)
 		{
-            AudioSource.PlayClipAtPoint(clip, transform.position);
+				Destroy(gameObject);
 
-            Destroy(gameObject);
-
-			//add item value to player score
-			GameManager.Score += itemValue;
+			gameManager.PlayerLife--;
+			gameManager.lives[--gameManager.CurrentHeart] = false;
+			Debug.Log(gameManager.CurrentHeart);
 		}
 
 		// checks if item is colliding with floor, if true destroy item

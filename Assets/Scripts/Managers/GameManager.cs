@@ -13,9 +13,14 @@ public class GameManager : MonoBehaviour
     private static int _score;
 	private bool _paused;
     private bool _slowed;
-    private int _numberOfItemsToFall = 10;
 
-    public string levelNameToLoadNext;
+	public int playerLife = 3;
+
+	public bool[] lives;
+
+	public Image[] images;
+
+	private int currentHeart = 2;
 
 	#endregion
 
@@ -59,13 +64,13 @@ public class GameManager : MonoBehaviour
 		set { _score = value; }
 	}
 
-	public int NumberOfItemsToFall
+	public int PlayerLife
 	{
 		get
 		{
-			return _numberOfItemsToFall;
+			return playerLife;
 		}
-		set { _numberOfItemsToFall = value; }
+		set { playerLife = value; }
 	}
 
 	public bool Paused
@@ -80,36 +85,41 @@ public class GameManager : MonoBehaviour
         set { _slowed = value; }
     }
 
-    #endregion
+	public int CurrentHeart
+	{
+		get { return currentHeart; }
+		set { currentHeart = value; }
+	}
+
+	#endregion
 
     #region Unity methods
 
     void Start()
 	{
+		lives = new []{ true, true, true, false, false};
 		Paused = false;
 	}
 
 	void Update()
 	{
-        // check if all item are created
-        if (NumberOfItemsToFall <= 0)
+        // check if player has no lives
+        if (PlayerLife < 0)
         {
-            // if so stop instanting items
-            // and wait until all item gameobjects are destroyed in the scene
-            if (GameObject.FindGameObjectsWithTag("FallingItem").Length == 0)
-            {
-                try
-                {
-                    // after that load next level
-                    Application.LoadLevel(levelNameToLoadNext);
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                    Application.Quit();
-                }
-            }
+            Application.LoadLevel("endGame");
         }
+
+		for (int i = 0; i < lives.Length; i++)
+		{
+			if (lives[i])
+			{
+				images[i].enabled = true;
+			}
+			else
+			{
+				images[i].enabled = false;
+			}
+		}
 
         scoreText.text = "Score: " + Score;
 
