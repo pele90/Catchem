@@ -27,15 +27,6 @@ public class ItemManager : MonoBehaviour
         InvokeRepeating("GogoMethod", 0, tickRate);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (GameManager.instance.NumberOfItemsToFall <= 0)
-        //{
-        //    CancelInvoke();
-        //}
-    }
-
     #region Methods
 
     // updating method that is called each tick
