@@ -4,9 +4,6 @@ public class PumpkinItem : MonoBehaviour
 {
 	#region Fields
 
-	//reference to rigidbody
-	private Rigidbody2D rigidbody;
-
 	//value added to the player score
 	public int itemValue;
 
@@ -19,7 +16,6 @@ public class PumpkinItem : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		rigidbody = GetComponent<Rigidbody2D>();
 		itemValue = Constants.instance.PUMPKIN_ITEM_VALUE;
 		fallingSpeed = Constants.instance.PUMPKIN_ITEM_FALLING_SPEED;
 	}
@@ -28,7 +24,7 @@ public class PumpkinItem : MonoBehaviour
 	void Update()
 	{
 
-		rigidbody.velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)

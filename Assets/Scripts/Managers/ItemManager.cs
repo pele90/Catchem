@@ -23,7 +23,7 @@ public class ItemManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Random.seed = (int)System.DateTime.Now.Ticks;
+        Random.InitState((int)System.DateTime.Now.Ticks);
         InvokeRepeating("GogoMethod", 0, tickRate);
     }
 

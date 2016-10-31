@@ -1,83 +1,87 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
-	#region Fields
-	static GameManager _instance;
-	public Text scoreText;
+    #region Fields
+    static GameManager _instance;
+
+    public Image[] images;
+    public Text scoreText;
     public Text pauseText;
+    public int playerLife = 3;
+    public bool[] lives;
+
 
     private static int _score;
-	private bool _paused;
+    private bool _paused;
     private bool _slowed;
+    private int currentHeart = 2;
 
-	public int playerLife = 3;
+    #endregion
 
-	public bool[] lives;
+    #region Singleton
 
-	public Image[] images;
+    static public bool isActive
+    {
+        get
+        {
+            return _instance != null;
+        }
+    }
 
-	private int currentHeart = 2;
+    // Property for getting existing instance of GameManager or create new instance
+    static public GameManager instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType(typeof(GameManager)) as GameManager;
 
-	#endregion
+                if (_instance == null)
+                {
+                    GameObject go = new GameObject("GameManager");
+                    DontDestroyOnLoad(go);
+                    _instance = go.AddComponent<GameManager>();
+                }
+            }
+            return _instance;
+        }
+    }
 
-	#region Singleton
+    #endregion
 
-	static public bool isActive
-	{
-		get
-		{
-			return _instance != null;
-		}
-	}
+    #region Properties
 
-	// Property for getting existing instance of GameManager or create new instance
-	static public GameManager instance
-	{
-		get
-		{
-			if (_instance == null)
-			{
-				_instance = Object.FindObjectOfType(typeof(GameManager)) as GameManager;
+    public static int Score
+    {
+        get { return _score; }
+        set { _score = value; }
+    }
 
-				if (_instance == null)
-				{
-					GameObject go = new GameObject("GameManager");
-					DontDestroyOnLoad(go);
-					_instance = go.AddComponent<GameManager>();
-				}
-			}
-			return _instance;
-		}
-	}
+    public int PlayerLife
+    {
+        get
+        {
+            return playerLife;
+        }
+        set
+        {
+            if (playerLife > 5)
+                playerLife = 5;
+            else
+                playerLife = value;
+        }
+    }
 
-	#endregion
-
-	#region Properties
-
-	public static int Score
-	{
-		get { return _score; }
-		set { _score = value; }
-	}
-
-	public int PlayerLife
-	{
-		get
-		{
-			return playerLife;
-		}
-		set { playerLife = value; }
-	}
-
-	public bool Paused
-	{
-		get { return _paused; }
-		set { _paused = value; }
-	}
+    public bool Paused
+    {
+        get { return _paused; }
+        set { _paused = value; }
+    }
 
     public bool Slowed
     {
@@ -85,75 +89,87 @@ public class GameManager : MonoBehaviour
         set { _slowed = value; }
     }
 
-	public int CurrentHeart
-	{
-		get { return currentHeart; }
-		set { currentHeart = value; }
-	}
+    public int CurrentHeart
+    {
+        get { return currentHeart; }
+        set
+        {
+            if (currentHeart > 4)
+                currentHeart = 4;
+            else
+                currentHeart = value;
+        }
+    }
 
-	#endregion
+    #endregion
 
     #region Unity methods
 
     void Start()
-	{
-		lives = new []{ true, true, true, false, false};
-		Paused = false;
-	}
+    {
+        lives = new[] { true, true, true, false, false };
+        Paused = false;
+    }
 
-	void Update()
-	{
+    void Update()
+    {
         // check if player has no lives
-        if (PlayerLife < 0)
+        if (PlayerLife == 0)
         {
-            Application.LoadLevel("endGame");
+            SceneManager.LoadScene("endGame");
+        }
+        else
+        {
+            if (images != null)
+            {
+                for (int i = 0; i < lives.Length; i++)
+                {
+                    if (lives[i] == true)
+                    {
+                        images[i].enabled = true;
+                    }
+                    else if (lives[i] == false)
+                    {
+                        images[i].enabled = false;
+                    }
+                }
+            }
+
+            if (scoreText != null)
+                scoreText.text = "Score: " + Score;
+
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                if (Paused == false)
+                {
+                    Paused = true;
+                    Time.timeScale = 0;
+                    pauseText.text = "Paused";
+                }
+                else
+                {
+                    Paused = false;
+                    Time.timeScale = 1;
+                    pauseText.text = "";
+                }
+
+            }
+            else if (Input.GetKeyUp(KeyCode.F))
+            {
+                if (Slowed)
+                {
+                    Time.timeScale = 0.5f;
+                    Slowed = false;
+                }
+                else
+                {
+                    Time.timeScale = 1;
+                    Slowed = true;
+                }
+            }
         }
 
-		for (int i = 0; i < lives.Length; i++)
-		{
-			if (lives[i])
-			{
-				images[i].enabled = true;
-			}
-			else
-			{
-				images[i].enabled = false;
-			}
-		}
+    }
 
-        scoreText.text = "Score: " + Score;
-
-		if (Input.GetKeyUp(KeyCode.Space))
-		{
-			if (Paused == false)
-			{
-				Paused = true;
-				Time.timeScale = 0;
-                pauseText.text = "Paused";
-			}
-			else
-			{
-				Paused = false;
-				Time.timeScale = 1;
-                pauseText.text = "";
-            }
-			
-		}
-        else if (Input.GetKeyUp(KeyCode.F))
-        {
-            if (Slowed)
-            {
-                Time.timeScale = 0.5f;
-                Slowed = false;
-            }
-            else
-            {
-                Time.timeScale = 1;
-                Slowed = true;
-            }
-            
-        }
-	}
-
-	#endregion
+    #endregion
 }

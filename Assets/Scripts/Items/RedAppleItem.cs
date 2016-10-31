@@ -4,9 +4,6 @@ public class RedAppleItem : MonoBehaviour
 {
 	#region Fields
 
-	//reference to rigidbody
-	private Rigidbody2D rigidbody;
-
 	//value added to the player score
 	public int itemValue;
 
@@ -19,7 +16,6 @@ public class RedAppleItem : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		rigidbody = GetComponent<Rigidbody2D>();
 		itemValue = Constants.instance.RED_APPLE_ITEM_VALUE;
 		fallingSpeed = Constants.instance.RED_APPLE_ITEM_FALLING_SPEED;
 	}
@@ -27,7 +23,7 @@ public class RedAppleItem : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		rigidbody.velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Constants.instance.ZERO, -fallingSpeed);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll)
