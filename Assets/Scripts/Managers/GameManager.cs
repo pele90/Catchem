@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
             if (scoreText != null)
                 scoreText.text = "Score: " + Score;
 
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
                 if (Paused == false)
                 {
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
             {
                 if (Slowed)
                 {
-                    Time.timeScale = 0.5f;
+                    Time.timeScale = 0.2f;
                     Slowed = false;
                 }
                 else

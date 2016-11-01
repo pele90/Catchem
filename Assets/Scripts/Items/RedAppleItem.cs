@@ -6,7 +6,6 @@ public class RedAppleItem : MonoBehaviour
 
 	//value added to the player score
 	public int itemValue;
-
 	public float fallingSpeed;
 
     #endregion

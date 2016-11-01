@@ -1,15 +1,22 @@
-﻿using System.Timers;
+﻿using Random = UnityEngine.Random;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 public class ItemManager : MonoBehaviour
 {
+    [System.Serializable]
+    public struct SpecialItem
+    {
+        public string name;
+        public GameObject specialItem;
+    }
 
     #region Fields
 
     public GameObject[] itemPool;
+    public SpecialItem[] specialItemPool;
+    private Dictionary<string, GameObject> dictSpecialItem;
 
-    public GameObject lifeHeart;
 
     // basic unit of time
     public float tickRate = 0.1f;
@@ -22,14 +29,19 @@ public class ItemManager : MonoBehaviour
 
     #endregion
 
+    #region Methods
+
     // Use this for initialization
     void Start()
     {
+        dictSpecialItem = new Dictionary<string, GameObject>();
+        foreach (var item in specialItemPool)
+        {
+            dictSpecialItem.Add(item.name, item.specialItem);
+        }
         Random.InitState((int)System.DateTime.Now.Ticks);
         InvokeRepeating("GogoMethod", 0, tickRate);
     }
-
-    #region Methods
 
     // updating method that is called each tick
     private void GogoMethod()
@@ -43,9 +55,14 @@ public class ItemManager : MonoBehaviour
         if(progressionCounter != 0 && progressionCounter % 300 == 0)
         {
             var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
-            InstantiateLifeHeart(randomPosition);
+            InstantiateGameObject(dictSpecialItem["lifeHeart"], randomPosition);
         }
 
+        if (progressionCounter != 0 && progressionCounter % 400 == 0)
+        {
+            var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
+            InstantiateGameObject(dictSpecialItem["whiteFeather"], randomPosition);
+        }
 
         if (delayCounter == 0)
         {
@@ -92,9 +109,9 @@ public class ItemManager : MonoBehaviour
                                             , Quaternion.identity);
     }
 
-    private void InstantiateLifeHeart(float randomSpawnPosition)
+    private void InstantiateGameObject(GameObject p_gameobject, float randomSpawnPosition)
     {
-        Instantiate(lifeHeart, new Vector2(randomSpawnPosition
+        Instantiate(p_gameobject, new Vector2(randomSpawnPosition
                                             , Constants.instance.HEIGHT_ITEM_STARTING_POINT)
                                             , Quaternion.identity);
     }

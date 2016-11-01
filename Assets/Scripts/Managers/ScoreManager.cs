@@ -6,7 +6,6 @@ public class ScoreManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Debug.Log(GameManager.Score.ToString());
         GetComponent<Text>().text = "Your score is: " + GameManager.Score.ToString();
     }
 

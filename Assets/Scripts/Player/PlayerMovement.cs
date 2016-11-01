@@ -5,18 +5,16 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Fields
 
-    // amount of x movement
-    private float _moveX = 0f;
+    private float hInput = 0;
 
     //movement movemenSpeed
     public float movementSpeed = 0f;
 
-    public float jumpSpeed = 0.1f;
+    public float jumpSpeed = 5f;
 
     private Transform groundCheck;
     public LayerMask GroundLayer;
 
-    private bool isJumping = false;
     #endregion
 
     void Start()
@@ -27,16 +25,34 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.L))
-        {
-            bool isGrounded = Physics2D.OverlapPoint(groundCheck.position, GroundLayer);
 
-            if (isGrounded)
-                GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+#if !UNITY_ANDROID && !UNITY_IPHONE && !UNITY_BLACKBERRY && !UNITY_WINRT
+        if (Input.GetButton("joystick button 0") || Input.GetButton("Jump"))
+        {
+            Jump();
         }
 
-        _moveX = Input.GetAxis("Horizontal");
+        Move(Input.GetAxis("Horizontal"));
+#else
+        Move(hInput);
+#endif
+    }
 
-        GetComponent<Rigidbody2D>().velocity = new Vector2(_moveX * movementSpeed, GetComponent<Rigidbody2D>().velocity.y);
+    public void Move(float p_moveX)
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(p_moveX * movementSpeed, GetComponent<Rigidbody2D>().velocity.y);
+    }
+
+    public void Jump()
+    {
+        bool isGrounded = Physics2D.OverlapPoint(groundCheck.position, GroundLayer);
+
+        if (isGrounded)
+            GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+    }
+
+    public void StartMoving(float p_moveX)
+    {
+        hInput = p_moveX;
     }
 }

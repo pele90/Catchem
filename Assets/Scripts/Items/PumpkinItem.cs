@@ -6,7 +6,6 @@ public class PumpkinItem : MonoBehaviour
 
 	//value added to the player score
 	public int itemValue;
-
 	public float fallingSpeed;
 
 	#endregion

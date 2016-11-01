@@ -44,12 +44,14 @@ public class Constants : MonoBehaviour
 	public int SKULL_ITEM_VALUE = 20;
 	public int HEALTH_POTION_ITEM_VALUE = 30;
 	public int RED_APPLE_ITEM_VALUE = 40;
+    public int WHITE_FEATHER_ITEM_VALUE = 50;
 
-	// Item falling speed
-	public float PUMPKIN_ITEM_FALLING_SPEED = 1.5f;
+    // Item falling speed
+    public float PUMPKIN_ITEM_FALLING_SPEED = 1.5f;
 	public float SKULL_ITEM_FALLING_SPEED = 2;
 	public float RED_APPLE_ITEM_FALLING_SPEED = 2.5f;
     public float LIFE_HEART_ITEM_FALLING_SPEED = 1.8f;
+    public float WHITE_FEATHER_ITEM_FALLING_SPEED = 1.8f;
 
     // Item falling frequency
     public int PUMPKIN_ITEM_FALLING_FREQUENCY = 3;
