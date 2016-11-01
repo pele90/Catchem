@@ -57,7 +57,7 @@ public class Constants : MonoBehaviour
 	public int RED_APPLE_ITEM_FALLING_FREQUENCY = 10;
 	public int LIFE_HEART_ITEM_FALLING_FREQUENCY = 20;
 
-	public int TOTAL_NUMBER_OF_ITEMS = 4;
+	public int TOTAL_NUMBER_OF_ITEMS = 3;
 
 	// proggression counters
 	public int FIRST_THRESHOLD = 100;

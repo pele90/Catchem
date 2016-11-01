@@ -9,6 +9,8 @@ public class ItemManager : MonoBehaviour
 
     public GameObject[] itemPool;
 
+    public GameObject lifeHeart;
+
     // basic unit of time
     public float tickRate = 0.1f;
 
@@ -36,6 +38,12 @@ public class ItemManager : MonoBehaviour
         {
             // on first call of the method set delay counter to random value
             delayCounter = Random.Range(Constants.instance.MIN_WAIT_TIME, Constants.instance.HARD_MIN_WAIT_TIME);
+        }
+
+        if(progressionCounter != 0 && progressionCounter % 300 == 0)
+        {
+            var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
+            InstantiateLifeHeart(randomPosition);
         }
 
 
@@ -78,7 +86,15 @@ public class ItemManager : MonoBehaviour
     {
         // choosing item from item pool
         var randomItem = itemPool[randomNumber];
-        Instantiate(randomItem, new Vector2(randomSpawnPosition
+
+            Instantiate(randomItem, new Vector2(randomSpawnPosition
+                                            , Constants.instance.HEIGHT_ITEM_STARTING_POINT)
+                                            , Quaternion.identity);
+    }
+
+    private void InstantiateLifeHeart(float randomSpawnPosition)
+    {
+        Instantiate(lifeHeart, new Vector2(randomSpawnPosition
                                             , Constants.instance.HEIGHT_ITEM_STARTING_POINT)
                                             , Quaternion.identity);
     }

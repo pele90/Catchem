@@ -40,7 +40,7 @@ public class SkullItem : MonoBehaviour
         // checks if item is colliding with floor, if true destroy item
         if (coll.gameObject.tag == Constants.instance.FLOOR)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 3);
         }
 
     }
