@@ -25,9 +25,12 @@ public class Constants : MonoBehaviour
 		}
 	}
 
-	#region Static Fields
+    #region Static Fields
 
-	public int ZERO = 0;
+    //public int TOTAL_NUMBER_OF_ITEMS = 3;
+
+
+    public int ZERO = 0;
 	public int MILISECOND_MULTIPLIER = 1000;
 
 	// starting position
@@ -51,15 +54,13 @@ public class Constants : MonoBehaviour
 	public float SKULL_ITEM_FALLING_SPEED = 2;
 	public float RED_APPLE_ITEM_FALLING_SPEED = 2.5f;
     public float LIFE_HEART_ITEM_FALLING_SPEED = 1.8f;
-    public float WHITE_FEATHER_ITEM_FALLING_SPEED = 1.8f;
+    public float WHITE_FEATHER_ITEM_FALLING_SPEED = 0.5f;
 
     // Item falling frequency
     public int PUMPKIN_ITEM_FALLING_FREQUENCY = 3;
 	public int SKULL_ITEM_FALLING_FREQUENCY = 8;
 	public int RED_APPLE_ITEM_FALLING_FREQUENCY = 10;
 	public int LIFE_HEART_ITEM_FALLING_FREQUENCY = 20;
-
-	public int TOTAL_NUMBER_OF_ITEMS = 3;
 
 	// proggression counters
 	public int FIRST_THRESHOLD = 100;

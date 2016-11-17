@@ -58,7 +58,7 @@ public class ItemManager : MonoBehaviour
             InstantiateGameObject(dictSpecialItem["lifeHeart"], randomPosition);
         }
 
-        if (progressionCounter != 0 && progressionCounter % 400 == 0)
+        if (progressionCounter != 0 && progressionCounter % 100 == 0)
         {
             var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
             InstantiateGameObject(dictSpecialItem["whiteFeather"], randomPosition);
@@ -67,7 +67,7 @@ public class ItemManager : MonoBehaviour
         if (delayCounter == 0)
         {
             // getting random number so we can choose random item in item pool
-			var randomItem = Random.Range(Constants.instance.ZERO, Constants.instance.TOTAL_NUMBER_OF_ITEMS);
+			var randomItem = Random.Range(Constants.instance.ZERO, itemPool.Length);
             // calculating item spawn position
             var randomPosition = Random.Range(Constants.instance.MIN_ITEM_STARTING_POINT, Constants.instance.MAX_ITEM_STARTING_POINT);
 
@@ -101,7 +101,6 @@ public class ItemManager : MonoBehaviour
 
     private void InstantiateRandomItemAtRandomLocaton(int randomNumber, float randomSpawnPosition)
     {
-        // choosing item from item pool
         var randomItem = itemPool[randomNumber];
 
             Instantiate(randomItem, new Vector2(randomSpawnPosition
